@@ -1,4 +1,4 @@
 @echo off
-mvn clean deploy -s settings.xml %*
+call mvn clean deploy -s settings.xml %*
 pause
 exit
