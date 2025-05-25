@@ -21,12 +21,15 @@ import static com.diogonunes.jcolor.Ansi.colorize;
 import static com.diogonunes.jcolor.Attribute.TEXT_COLOR;
 
 /**
+ * Usage:
  * Utility class for application logging with multiple severity levels.
  * Provides colored console output and file logging with automatic rotation.
  * Log files are stored in the "logs" directory and compressed when rotated.
  * 
  * @see java.util.logging.Logger The underlying logging implementation
- * @see ILogObserver For implementing custom log observers
+ * 
+ * @version 1.0
+ * @since 1.0
  */
 public final class LOG {
     /**
@@ -156,6 +159,7 @@ public final class LOG {
     /**
      * Logs and rethrows an exception.
      * 
+     * @param <E>       The type of exception to log and rethrow
      * @param message   The error message to log
      * @param exception The exception to log and rethrow
      * @throws E The original exception is rethrown
@@ -168,6 +172,7 @@ public final class LOG {
     /**
      * Logs an exception. (Does not rethrow)
      * 
+     * @param <E>       The type of exception to log
      * @param message   The error message to log
      * @param exception The exception to log and rethrow
      * @param notThrow  Not used, but required for method signature. Anything passed
@@ -180,6 +185,7 @@ public final class LOG {
     /**
      * Logs and rethrows an exception.
      * 
+     * @param <E>       The type of exception to log and rethrow
      * @param exception The exception to log and rethrow
      * @throws E The original exception is rethrown
      */
@@ -191,6 +197,7 @@ public final class LOG {
     /**
      * Logs an exception. (Does not rethrow)
      * 
+     * @param <E>       The type of exception to log
      * @param exception The exception to log and rethrow
      * @param notThrow  Not used, but required for method signature. Anything passed
      *                  here make log not throw.
@@ -202,6 +209,7 @@ public final class LOG {
     /**
      * Logs trace information for an exception and rethrows.
      * 
+     * @param <E>       The type of exception to log and rethrow
      * @param exception The exception to log and rethrow
      * @throws E The original exception is rethrown
      */
@@ -213,8 +221,9 @@ public final class LOG {
     /**
      * Logs trace information for an exception. (Does not rethrow)
      * 
+     * @param <E>       The type of exception to log
      * @param exception The exception to log and rethrow
-     * @throws E The original exception is rethrown
+     * @param notThrow  Not used, but required for method signature. Anything passed
      */
     public static <E extends Throwable> void trace(E exception, Object notThrow) {
         Logger.finer(getStackTrace(exception));
@@ -318,7 +327,11 @@ public final class LOG {
         return dir.resolve(baseDate + "_" + (highestIndex + 1) + extension);
     }
 
-    // Static initializer block that sets up logging
+    /**
+     * Static initializer to set up the logger.
+     * Configures console and file handlers with appropriate formats.
+     * Handles log rotation and compression.
+     */
     static {
         Logger.setLevel(Level.FINEST);
         Logger.setUseParentHandlers(false);
@@ -386,5 +399,13 @@ public final class LOG {
         } catch (IOException e) {
             error("Error while logging", e, true);
         }
+    }
+
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     * This class contains only static methods and should not be instantiated.
+     */
+    private LOG() {
+        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
     }
 }

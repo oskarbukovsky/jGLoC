@@ -91,3 +91,4 @@ nb-configuration.xml
 ## Miscellaneous
 ##############################
 *.log
+settings.xml
